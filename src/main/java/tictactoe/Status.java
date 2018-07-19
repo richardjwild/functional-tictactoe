@@ -1,5 +1,5 @@
 package tictactoe;
 
 public enum Status {
-    GAME_ON
+    SQUARE_ALREADY_PLAYED, GAME_ON
 }
