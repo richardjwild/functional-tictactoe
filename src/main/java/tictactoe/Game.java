@@ -6,21 +6,28 @@ import static tictactoe.Status.GAME_ON;
 
 public class Game {
 
-    private final Player nextPlayer;
+    private final Player currentPlayer;
 
     public Game() {
-        nextPlayer = X;
+        currentPlayer = null;
     }
 
-    private Game(Player nextPlayer) {
-        this.nextPlayer = nextPlayer;
+    private Game(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
     public GameState state() {
-        return new GameState(GAME_ON, nextPlayer);
+        return new GameState(GAME_ON, nextPlayer());
+    }
+
+    private Player nextPlayer() {
+        if (currentPlayer == null)
+            return X;
+        else
+            return currentPlayer == X ? O : X;
     }
 
     public Game play() {
-        return new Game(O);
+        return new Game(nextPlayer());
     }
 }

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static tictactoe.Player.O;
 import static tictactoe.Player.X;
 import static tictactoe.Status.GAME_ON;
 
@@ -19,10 +18,11 @@ public class GameShould {
     }
 
     @Test
-    void wait_for_o_to_play_after_x() {
+    void alternate_the_players() {
         var game = new Game();
         game = game.play();
+        game = game.play();
 
-        assertThat(game.state()).isEqualTo(new GameState(GAME_ON, O));
+        assertThat(game.state()).isEqualTo(new GameState(GAME_ON, X));
     }
 }
