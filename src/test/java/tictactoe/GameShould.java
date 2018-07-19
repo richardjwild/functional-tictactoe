@@ -2,6 +2,8 @@ package tictactoe;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Arrays;
 
@@ -13,9 +15,7 @@ import static tictactoe.Square.*;
 import static tictactoe.Square.BOTTOM_RIGHT;
 import static tictactoe.Square.TOP_LEFT;
 import static tictactoe.Square.TOP_MIDDLE;
-import static tictactoe.Status.DRAW;
-import static tictactoe.Status.GAME_ON;
-import static tictactoe.Status.SQUARE_ALREADY_PLAYED;
+import static tictactoe.Status.*;
 
 @DisplayName("Game adjudicator should")
 public class GameShould {
@@ -65,5 +65,22 @@ public class GameShould {
                 BOTTOM_RIGHT);
 
         assertThat(game.state()).isEqualTo(new GameState(DRAW, NOBODY));
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "TOP_LEFT,CENTRE_LEFT,TOP_MIDDLE,CENTRE_MIDDLE,TOP_RIGHT",
+            "CENTRE_LEFT,TOP_LEFT,CENTRE_MIDDLE,TOP_MIDDLE,CENTRE_RIGHT",
+            "BOTTOM_LEFT,TOP_LEFT,BOTTOM_MIDDLE,TOP_MIDDLE,BOTTOM_RIGHT",
+            "TOP_LEFT,TOP_MIDDLE,CENTRE_LEFT,CENTRE_MIDDLE,BOTTOM_LEFT",
+            "TOP_MIDDLE,TOP_LEFT,CENTRE_MIDDLE,CENTRE_LEFT,BOTTOM_MIDDLE",
+            "TOP_RIGHT,TOP_LEFT,CENTRE_RIGHT,CENTRE_LEFT,BOTTOM_RIGHT",
+            "TOP_LEFT,BOTTOM_LEFT,CENTRE_MIDDLE,TOP_RIGHT,BOTTOM_RIGHT",
+            "TOP_RIGHT,BOTTOM_RIGHT,CENTRE_MIDDLE,TOP_RIGHT,BOTTOM_LEFT"
+    })
+    void recognise_when_x_has_won(Square s1, Square s2, Square s3, Square s4, Square s5) {
+        var game = play(s1, s2, s3, s4, s5);
+
+        assertThat(game.state()).isEqualTo(new GameState(X_HAS_WON, NOBODY));
     }
 }

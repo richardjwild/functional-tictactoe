@@ -3,9 +3,7 @@ package tictactoe;
 import static tictactoe.Player.NOBODY;
 import static tictactoe.Player.O;
 import static tictactoe.Player.X;
-import static tictactoe.Status.DRAW;
-import static tictactoe.Status.GAME_ON;
-import static tictactoe.Status.SQUARE_ALREADY_PLAYED;
+import static tictactoe.Status.*;
 
 public class Game {
 
@@ -24,12 +22,14 @@ public class Game {
         this.currentPlayer = currentPlayer;
         if (board.isFull())
             this.status = DRAW;
+        else if (board.hasWon())
+            this.status = X_HAS_WON;
         else
             this.status = status;
     }
 
     public GameState state() {
-        if (status == DRAW)
+        if (status == DRAW || status == X_HAS_WON)
             return new GameState(status, NOBODY);
         else
             return new GameState(status, nextPlayer());
