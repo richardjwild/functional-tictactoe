@@ -29,10 +29,14 @@ public class Game {
     }
 
     public GameState state() {
-        if (status == DRAW || status == X_HAS_WON || status == O_HAS_WON)
+        if (gameIsOver())
             return new GameState(status, NOBODY);
         else
             return new GameState(status, nextPlayer());
+    }
+
+    private boolean gameIsOver() {
+        return status == DRAW || status == X_HAS_WON || status == O_HAS_WON;
     }
 
     private Player nextPlayer() {
@@ -43,7 +47,9 @@ public class Game {
     }
 
     public Game play(Square toPlay) {
-        if (board.alreadyTaken(toPlay))
+        if (gameIsOver())
+            return this;
+        else if (board.alreadyTaken(toPlay))
             return new Game(SQUARE_ALREADY_PLAYED, board, currentPlayer);
         else
             return new Game(GAME_ON, board.take(toPlay, nextPlayer()), nextPlayer());

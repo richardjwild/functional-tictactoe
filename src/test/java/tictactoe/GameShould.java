@@ -96,4 +96,17 @@ public class GameShould {
 
         assertThat(game.state()).isEqualTo(new GameState(O_HAS_WON, NOBODY));
     }
+
+    @Test
+    void not_permit_play_after_game_is_won() {
+        var game = play(
+                TOP_LEFT,
+                CENTRE_LEFT,
+                TOP_MIDDLE,
+                CENTRE_MIDDLE,
+                TOP_RIGHT,
+                CENTRE_RIGHT);
+
+        assertThat(game.state()).isEqualTo(new GameState(X_HAS_WON, NOBODY));
+    }
 }
