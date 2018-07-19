@@ -20,10 +20,10 @@ public class Game {
     private Game(Status status, Board board, Player currentPlayer) {
         this.board = board;
         this.currentPlayer = currentPlayer;
-        if (board.isFull())
-            this.status = DRAW;
-        else if (board.hasWon(currentPlayer))
+        if (board.hasWon(currentPlayer))
             this.status = currentPlayer == X ? X_HAS_WON : O_HAS_WON;
+        else if (board.isFull())
+            this.status = DRAW;
         else
             this.status = status;
     }

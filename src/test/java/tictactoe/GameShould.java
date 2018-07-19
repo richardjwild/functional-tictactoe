@@ -48,9 +48,9 @@ public class GameShould {
                 .reduce(new Game(), Game::play, (a, b) -> null);
     }
 
-    // X O X
-    // O X X
-    // O X O
+    // X' O' X'
+    // O' X' X'
+    // O' X O
     @Test
     void recognise_a_draw() {
         var game = play(
@@ -61,8 +61,8 @@ public class GameShould {
                 CENTRE_MIDDLE,
                 BOTTOM_LEFT,
                 CENTRE_RIGHT,
-                BOTTOM_MIDDLE,
-                BOTTOM_RIGHT);
+                BOTTOM_RIGHT,
+                BOTTOM_MIDDLE);
 
         assertThat(game.state()).isEqualTo(new GameState(DRAW, NOBODY));
     }
@@ -106,6 +106,24 @@ public class GameShould {
                 CENTRE_MIDDLE,
                 TOP_RIGHT,
                 CENTRE_RIGHT);
+
+        assertThat(game.state()).isEqualTo(new GameState(X_HAS_WON, NOBODY));
+    }
+
+    // X O X
+    // O X X
+    // O O X
+    @Test
+    void recognise_win_when_won_on_final_square() {
+        var game = play(TOP_LEFT,
+                TOP_MIDDLE,
+                TOP_RIGHT,
+                CENTRE_LEFT,
+                CENTRE_MIDDLE,
+                BOTTOM_LEFT,
+                CENTRE_RIGHT,
+                BOTTOM_MIDDLE,
+                BOTTOM_RIGHT);
 
         assertThat(game.state()).isEqualTo(new GameState(X_HAS_WON, NOBODY));
     }
