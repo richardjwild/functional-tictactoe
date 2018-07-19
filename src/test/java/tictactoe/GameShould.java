@@ -76,11 +76,24 @@ public class GameShould {
             "TOP_MIDDLE,TOP_LEFT,CENTRE_MIDDLE,CENTRE_LEFT,BOTTOM_MIDDLE",
             "TOP_RIGHT,TOP_LEFT,CENTRE_RIGHT,CENTRE_LEFT,BOTTOM_RIGHT",
             "TOP_LEFT,BOTTOM_LEFT,CENTRE_MIDDLE,TOP_RIGHT,BOTTOM_RIGHT",
-            "TOP_RIGHT,BOTTOM_RIGHT,CENTRE_MIDDLE,TOP_RIGHT,BOTTOM_LEFT"
+            "TOP_RIGHT,BOTTOM_RIGHT,CENTRE_MIDDLE,TOP_LEFT,BOTTOM_LEFT"
     })
     void recognise_when_x_has_won(Square s1, Square s2, Square s3, Square s4, Square s5) {
         var game = play(s1, s2, s3, s4, s5);
 
         assertThat(game.state()).isEqualTo(new GameState(X_HAS_WON, NOBODY));
+    }
+
+    @Test
+    void recognise_when_o_has_won() {
+        var game = play(
+                BOTTOM_LEFT,
+                TOP_LEFT,
+                CENTRE_LEFT,
+                TOP_MIDDLE,
+                CENTRE_MIDDLE,
+                TOP_RIGHT);
+
+        assertThat(game.state()).isEqualTo(new GameState(O_HAS_WON, NOBODY));
     }
 }

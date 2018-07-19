@@ -22,14 +22,14 @@ public class Game {
         this.currentPlayer = currentPlayer;
         if (board.isFull())
             this.status = DRAW;
-        else if (board.hasWon())
-            this.status = X_HAS_WON;
+        else if (board.hasWon(currentPlayer))
+            this.status = currentPlayer == X ? X_HAS_WON : O_HAS_WON;
         else
             this.status = status;
     }
 
     public GameState state() {
-        if (status == DRAW || status == X_HAS_WON)
+        if (status == DRAW || status == X_HAS_WON || status == O_HAS_WON)
             return new GameState(status, NOBODY);
         else
             return new GameState(status, nextPlayer());
@@ -46,6 +46,6 @@ public class Game {
         if (board.alreadyTaken(toPlay))
             return new Game(SQUARE_ALREADY_PLAYED, board, currentPlayer);
         else
-            return new Game(GAME_ON, board.take(toPlay), nextPlayer());
+            return new Game(GAME_ON, board.take(toPlay, nextPlayer()), nextPlayer());
     }
 }
